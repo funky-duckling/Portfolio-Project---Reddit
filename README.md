@@ -18,8 +18,40 @@ Welcome to the **Opposite Reddit** app! This is a fun, experimental version of R
 
 ## Installation
 
+If you'd like to run this project locally or contribute to its development, follow these steps:
+
 1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/funky-duckling/Portfolio-Project---Reddit.git
-   cd Portfolio-Project---Reddit
+   cd Portfolio-Project---Reddit.git
+   ```
+   
+   Install dependencies:
+
+   ```
+   npm install
+   Run the app:
+   ```
+
+   ```bash
+   npm run dev
+   ```
+
+   The app should now be available at http://localhost:5173.
+
+## Usage
+
+Once the app is running:
+
+1. You will see a NavBar with options such as "Top", "New", and "Hot".
+2. The search bar allows you to search for posts, and the search results will show the opposite of what you type.
+3. Click on individual posts to see the subreddit, title, content, and an image (if available).
+4. Each post is displayed in a card with the number of upvotes and comments.
+
+## Roadmap
+
+- Integrate the Reddit API for live data fetching.
+- Add more customization options for posts and filtering.
+- Improve performance and add testing.
+
