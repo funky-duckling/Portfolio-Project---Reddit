@@ -4,7 +4,7 @@ import NavButtons from './NavButtons';  // Import NavButtons component
 
 const NavBar = () => {
   return (
-    <nav className="bg-gray-800 p-4 w-full sticky top-0 z-10">
+    <nav className="bg-gray-600 p-4 w-full sticky top-0 z-10">
       <div className="flex justify-between items-center">
 
         {/* Header with logo and title */}
