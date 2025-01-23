@@ -24,18 +24,16 @@ Welcome to the **Opposite Reddit** app! This is a fun, experimental version of R
 Below are the initial wireframes that helped shape the design and structure of the app:
 
 ### Homepage Wireframe
-![Homepage Wireframe - desktop](src/assets/homepage-wireframe-desktop.png)
-![Homepage Wireframe - mobile](src/assets/homepage-wireframe-mobile.png)
+[![Homepage Wireframe - Desktop](src/assets/homepage-wireframe-desktop-thumb.png)](src/assets/homepage-wireframe-desktop.png)
+[![Homepage Wireframe - Mobile](src/assets/homepage-wireframe-mobile-thumb.png)](src/assets/homepage-wireframe-mobile.png)
 
 ### Search Results & Error Wireframe
-![Search Results Wireframe - desktop](src/assets/search-wireframe-desktop.png)
-![Search Error - desktop](src/assets/search-error-wireframe-desktop.png)
-![Search Results Wireframe - mobile](src/assets/search-wireframe-mobile.png)
-![Search Error - mobile](src/assets/search-error-wireframe-mobile.png)
+[![Search Results Wireframe - Desktop](src/assets/search-wireframe-desktop-thumb.png)](src/assets/search-wireframe-desktop.png)
+[![Search Error - Desktop](src/assets/search-error-wireframe-desktop-thumb.png)](src/assets/search-error-wireframe-desktop.png)
 
 ### Post Details Wireframe
-![Post Details Wireframe - desktop](src/assets/post-details-desktop.png)
-![Post Details Wireframe - mobile](src/assets/homepage-wireframe-mobile.png)
+[![Post Details Wireframe - Desktop](src/assets/post-details-desktop-thumb.png)](src/assets/post-details-desktop.png)
+[![Post Details Wireframe - Mobile](src/assets/post-details-mobile-thumb.png)](src/assets/post-details-mobile.png)
 
 ---
 
