@@ -1,26 +1,44 @@
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
+import { ArrowUpIcon, ArrowDownIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 
 const Card = ({ post }) => {
   return (
-    <div className="card p-4 bg-gray-700 text-white rounded-lg shadow-xl m-4 relative max-h-[600px] overflow-hidden">
-
+    <div
+      className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 relative"
+    >
       <div className="flex items-center mb-4">
-        {post.logo && <img src={post.logo} alt={`${post.subreddit} logo`} className="w-8 h-8 rounded-full mr-4" />}
+        {post.logo && (
+          <img
+            src={post.logo}
+            alt={`${post.subreddit} logo`}
+            className="w-8 h-8 rounded-full mr-4"
+          />
+        )}
         <h2 className="text-xl font-bold">{post.title}</h2>
       </div>
+       
+        {post.image && (
+          <img
+            src={post.image}
+            alt="Post"
+            className="w-full h-auto object-cover object-center mb-4"
+          />
+        )}
+        
+        <p className="text-sm">{post.content}</p>
 
-      <div className="overflow-y-auto" style={{ maxHeight: 'calc(600px - 100px)' }}>
-      {post.image && <img src={post.image} alt="Post image" className="w-full h-auto mb-4" />}
-
-      
-      <p className="text-sm">{post.content}</p>
+      {/* Upvotes and Comments */}
+      <div className="absolute top-4 right-4 flex items-center space-x-8">
+        <div className="flex items-center space-x-1">
+          <ArrowUpIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-green-500" />
+          <span>{post.upvotes}</span>
+          <ArrowDownIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-red-500" />
+        </div>
+        <div className="flex items-center space-x-1">
+          <ChatBubbleLeftIcon className="w-6 h-6 text-gray-400" />
+          <span>{post.comments}</span>
+        </div>
       </div>
-
-      <div className="absolute top-4 right-2 text-sm">
-        <span className='mx-4'>Upvotes: {post.upvotes}</span>
-        <span className='m-4'>Comments: {post.comments}</span>
-      </div>
-
     </div>
   );
 };
