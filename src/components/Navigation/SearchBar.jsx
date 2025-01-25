@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchQuery } from '../redux/postsSlice';
+import { setSearchQuery } from '../../features/posts/postsSlice';
 
 const SearchBar = () => {
       // Get the searchQuery from the Redux store

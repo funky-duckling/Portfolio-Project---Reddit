@@ -46,7 +46,12 @@ export const fetchRedditPosts = async (accessToken, subreddit = 'all', sort = 'h
   }
 };
 
-export const mapRedditPostToCard = (post) => ({
+export const mapRedditPostToCard = (post) => {
+    const largestImage =
+    post.preview?.images[0]?.resolutions?.slice(-1)[0]?.url.replace(/&amp;/g, '&') || null;
+
+    return {
+    id: post.id,
     title: post.title,
     author: post.author,
     subreddit: post.subreddit_name_prefixed,
@@ -54,6 +59,47 @@ export const mapRedditPostToCard = (post) => ({
     comments: post.num_comments,
     content: post.selftext || '',
     logo: `https://www.reddit.com${post.subreddit_icon || ''}`,
-    image: post.thumbnail && post.thumbnail.includes('http') ? post.thumbnail : null,
+    image: largestImage,
     created_utc: post.created_utc,
-  });
+    };
+  };
+
+// Function to fetch post details and comments
+export const fetchPostDetailsAndComments = async (accessToken, postId) => {
+  try {
+    const response = await axios.get(`${REDDIT_API_URL}/comments/${postId}.json`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'User-Agent': 'blue-it by Funky_duc', // Replace with your Reddit username
+      },
+    });
+
+    // Extract post and comments
+    const post = response.data[0].data.children[0].data;
+    const comments = response.data[1].data.children.map((child) => ({
+      id: child.data.id,
+      body: child.data.body || '',
+      author: child.data.author || 'Anonymous',
+      created_utc: child.data.created_utc,
+    }));
+
+    return {
+      post: {
+        id: post.id,
+        title: post.title,
+        content: post.selftext || '',
+        author: post.author,
+        subreddit: post.subreddit_name_prefixed,
+        upvotes: post.ups,
+        image:
+          post.preview?.images[0]?.source?.url.replace(/&amp;/g, '&') ||
+          (post.thumbnail?.startsWith('http') ? post.thumbnail : null),
+        created_utc: post.created_utc,
+      },
+      comments,
+    };
+  } catch (error) {
+    console.error('Error fetching post details and comments:', error);
+    throw new Error('Unable to fetch post details and comments');
+  }
+};

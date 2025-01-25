@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
-import NavBar from '../components/NavBar';
-import Card from '../components/Card';
-import { getAccessToken, fetchRedditPosts } from '../utils/redditAPI';
+import NavBar from '../components/Navigation/NavBar';
+import Card from '../components/UI/Card';
+import { getAccessToken, fetchRedditPosts } from '../services/redditAPI';
 
 const Home = () => {
   const [posts, setPosts] = useState([]); // State to store posts from Reddit

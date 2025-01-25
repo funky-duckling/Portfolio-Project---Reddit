@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import NavBar from '../components/NavBar';
-import Card from '../components/Card';
+import NavBar from '../components/Navigation/NavBar';
+import Card from '../components/UI/Card';
 
 const SearchPage = () => {
   // Get the search query from the Redux store

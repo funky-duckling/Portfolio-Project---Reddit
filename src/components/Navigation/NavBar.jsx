@@ -1,4 +1,4 @@
-import Header from './Header';  // Import Header component
+import Header from '../UI/Header';  // Import Header component
 import SearchBar from './SearchBar';  // Import SearchBar component
 import NavButtons from './NavButtons';  // Import NavButtons component
 

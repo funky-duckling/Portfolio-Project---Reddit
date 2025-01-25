@@ -1,26 +1,34 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { ArrowUpIcon, ArrowDownIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
-import formatDistanceToNow from '../utils/formatDistanceToNow';
+import formatDistanceToNow from '../../services/formatDistanceToNow';
+
 const Card = ({ post }) => {
   return (
-    <div className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 relative">
+    <Link
+      to={`/post/${post.id}`}
+      state={{ post }}
+      className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 relative block"
+    >
       {/* Subreddit Name */}
-      <p className="text-gray-400 text-sm">{post.subreddit}</p>
+      <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
 
       {/* Post Title */}
       <h2 className="text-xl font-bold mb-4">{post.title}</h2>
 
       {/* Optional Post Image */}
       {post.image && (
-        <img
-          src={post.image}
-          alt="Post"
-          className="w-full h-auto object-cover object-center mb-4"
-        />
+        <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
+          <img
+            src={post.image}
+            alt="Post"
+            className="object-cover object-center max-w-full h-auto"
+          />
+        </div>
       )}
 
       {/* Upvotes and Comments */}
-      <div className="absolute top-4 right-4 flex items-center space-x-8">
+      <div className="absolute top-2 right-4 flex items-center space-x-8">
         <div className="flex items-center space-x-1">
           <ArrowUpIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-green-500" />
           <span>{post.upvotes}</span>
@@ -34,15 +42,16 @@ const Card = ({ post }) => {
 
       {/* Time Ago */}
       <p className="text-gray-400 text-sm mt-2">
-        {formatDistanceToNow(new Date(post.created_utc * 1000))} ago
+        {formatDistanceToNow(post.created_utc)}
       </p>
-    </div>
+    </Link>
   );
 };
 
 // Define prop types
 Card.propTypes = {
   post: PropTypes.shape({
+    id: PropTypes.string.isRequired, // Unique post ID
     title: PropTypes.string.isRequired,
     subreddit: PropTypes.string.isRequired,
     upvotes: PropTypes.number.isRequired,
