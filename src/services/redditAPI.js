@@ -81,6 +81,9 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
       body: child.data.body || '',
       author: child.data.author || 'Anonymous',
       created_utc: child.data.created_utc,
+      profileImage: child.data.author
+        ? `https://www.redditstatic.com/avatars/avatar_default_${Math.floor(Math.random() * 20) + 1}.png`
+        : 'https://placehold.co/40x40?text=U&bg=gray&color=white', // Default avatar
     }));
 
     return {

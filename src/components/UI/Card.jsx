@@ -8,7 +8,7 @@ const Card = ({ post }) => {
     <Link
       to={`/post/${post.id}`}
       state={{ post }}
-      className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 relative block"
+      className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 relative block hover:bg-neutral-700"
     >
       {/* Subreddit Name */}
       <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
@@ -28,7 +28,7 @@ const Card = ({ post }) => {
       )}
 
       {/* Upvotes and Comments */}
-      <div className="absolute top-2 right-4 flex items-center space-x-8">
+      <div className="absolute bottom-3 right-4 flex items-center space-x-8">
         <div className="flex items-center space-x-1">
           <ArrowUpIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-green-500" />
           <span>{post.upvotes}</span>
