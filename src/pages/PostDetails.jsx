@@ -36,7 +36,7 @@ const PostDetails = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-4xl mx-auto px-4 py-4">
       {/* Post Details Card */}
       {post && (
         <div className="bg-gray-700 text-white rounded-lg shadow-xl p-6 mb-6">

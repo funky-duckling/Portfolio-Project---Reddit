@@ -8,18 +8,21 @@ const Home = () => {
   const [posts, setPosts] = useState([]); // State to store posts from Reddit
   const [loading, setLoading] = useState(true); // Loading state for fetching
   const [error, setError] = useState(null);
-  // Get the searchQuery from Redux store
-  const searchQuery = useSelector((state) => state.posts.searchQuery);
 
-  // Fetch posts from Reddit API when the component mounts
+  // Get the searchQuery and activeFilter from the Redux store
+  const searchQuery = useSelector((state) => state.posts.searchQuery);
+  const activeFilter = useSelector((state) => state.posts.activeFilter);
+
+  // Fetch posts from Reddit API when the component mounts or activeFilter changes
   useEffect(() => {
     const fetchPosts = async () => {
+      setLoading(true);
       try {
         // Get access token
         const accessToken = await getAccessToken();
 
-        // Fetch posts from Reddit
-        const fetchedPosts = await fetchRedditPosts(accessToken, 'all', 'hot', 10);
+        // Fetch posts from Reddit based on the active filter
+        const fetchedPosts = await fetchRedditPosts(accessToken, 'all', activeFilter.toLowerCase(), 10);
         setPosts(fetchedPosts);
         setLoading(false);
       } catch (err) {
@@ -29,9 +32,8 @@ const Home = () => {
     };
 
     fetchPosts();
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, [activeFilter]); // Re-run effect when activeFilter changes
 
-  
   // Filter posts based on the search query
   const filteredPosts = posts.filter((post) =>
     post.title.toLowerCase().includes(searchQuery.toLowerCase())
