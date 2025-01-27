@@ -30,16 +30,36 @@ export const getAccessToken = async () => {
 };
 
 // Function to fetch Reddit posts
-export const fetchRedditPosts = async (accessToken, subreddit = 'all', sort = 'hot', limit = 10) => {
+export const fetchRedditPosts = async (
+  accessToken,
+  subreddit = 'all',
+  sort = 'hot',
+  limit = 10,
+  after = null
+) => {
   try {
-    const response = await axios.get(`${REDDIT_API_URL}/r/${subreddit}/${sort}.json?limit=${limit}`, {
+    let url = `${REDDIT_API_URL}/r/${subreddit}/${sort}.json?limit=${limit}`;
+    if (after) {
+      url += `&after=${after}`;
+    }
+
+    const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'blue-it by Funky_duc', // Replace with your Reddit username
+        'User-Agent': 'blue-it by Funky_duc', // Your app’s user-agent
       },
     });
 
-    return response.data.data.children.map((child) => mapRedditPostToCard(child.data)); // Extract post data
+    // Extract post data
+    const children = response.data.data.children.map((child) =>
+      mapRedditPostToCard(child.data)
+    );
+    const nextAfter = response.data.data.after || null;
+
+    return {
+      posts: children,
+      after: nextAfter,
+    };
   } catch (error) {
     console.error('Error fetching Reddit posts:', error);
     throw new Error('Unable to fetch posts from Reddit');

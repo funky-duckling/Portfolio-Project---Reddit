@@ -31,12 +31,12 @@ const Card = ({ post }) => {
       <div className="absolute bottom-3 right-4 flex items-center space-x-8">
         <div className="flex items-center space-x-1">
           <ArrowUpIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-green-500" />
-          <span>{post.upvotes}</span>
+          <span>{post.upvotes.toLocaleString()}</span>
           <ArrowDownIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-red-500" />
         </div>
         <div className="flex items-center space-x-1">
           <ChatBubbleLeftIcon className="w-6 h-6 text-gray-400" />
-          <span>{post.comments}</span>
+          <span>{post.comments.toLocaleString()}</span>
         </div>
       </div>
 
