@@ -7,9 +7,7 @@ const CLIENT_SECRET = 'ZXOjpWmDkekNweAg4fjW570pyMU_ZQ';
 
 // Function to get the access token
 export const getAccessToken = async () => {
-  const data = new URLSearchParams({
-    grant_type: 'client_credentials',
-  });
+  const data = new URLSearchParams({ grant_type: 'client_credentials' });
 
   try {
     const response = await axios.post(`${REDDIT_AUTH_URL}/api/v1/access_token`, data, {
@@ -17,48 +15,43 @@ export const getAccessToken = async () => {
         username: CLIENT_ID,
         password: CLIENT_SECRET,
       },
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     });
 
-    return response.data.access_token; // Return the access token
+    return response.data.access_token;
   } catch (error) {
     console.error('Error fetching access token:', error);
     throw new Error('Unable to authenticate with Reddit API');
   }
 };
 
-// Function to fetch Reddit posts
+// Function to fetch Reddit posts (including Search)
 export const fetchRedditPosts = async (
   accessToken,
   subreddit = 'all',
   sort = 'hot',
   limit = 10,
-  after = null
+  after = null,
+  searchQuery = ''
 ) => {
   try {
-    let url = `${REDDIT_API_URL}/r/${subreddit}/${sort}.json?limit=${limit}`;
-    if (after) {
-      url += `&after=${after}`;
-    }
+    // Determine API endpoint (search or subreddit)
+    const url = searchQuery
+      ? `${REDDIT_API_URL}/r/${subreddit}/search.json?q=${encodeURIComponent(
+          searchQuery
+        )}&sort=${sort}&limit=${limit}${after ? `&after=${after}` : ''}`
+      : `${REDDIT_API_URL}/r/${subreddit}/${sort}.json?limit=${limit}${after ? `&after=${after}` : ''}`;
 
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'blue-it by Funky_duc', // Your app’s user-agent
+        'User-Agent': 'blue-it by Funky_duc',
       },
     });
 
-    // Extract post data
-    const children = response.data.data.children.map((child) =>
-      mapRedditPostToCard(child.data)
-    );
-    const nextAfter = response.data.data.after || null;
-
     return {
-      posts: children,
-      after: nextAfter,
+      posts: response.data.data.children.map((child) => mapRedditPostToCard(child.data)),
+      after: response.data.data.after || null,
     };
   } catch (error) {
     console.error('Error fetching Reddit posts:', error);
@@ -66,11 +59,13 @@ export const fetchRedditPosts = async (
   }
 };
 
+// Function to map API response to UI-friendly structure
 export const mapRedditPostToCard = (post) => {
-    const largestImage =
-    post.preview?.images[0]?.resolutions?.slice(-1)[0]?.url.replace(/&amp;/g, '&') || null;
+  const largestImage =
+    post.preview?.images[0]?.resolutions?.slice(-1)[0]?.url.replace(/&amp;/g, '&') ||
+    null;
 
-    return {
+  return {
     id: post.id,
     title: post.title,
     author: post.author,
@@ -78,11 +73,11 @@ export const mapRedditPostToCard = (post) => {
     upvotes: post.ups,
     comments: post.num_comments,
     content: post.selftext || '',
-    logo: `https://www.reddit.com${post.subreddit_icon || ''}`,
+    logo: post.subreddit_icon ? post.subreddit_icon : '',
     image: largestImage,
     created_utc: post.created_utc,
-    };
   };
+};
 
 // Function to fetch post details and comments
 export const fetchPostDetailsAndComments = async (accessToken, postId) => {
@@ -90,21 +85,22 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
     const response = await axios.get(`${REDDIT_API_URL}/comments/${postId}.json`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'blue-it by Funky_duc', // Replace with your Reddit username
+        'User-Agent': 'blue-it by Funky_duc',
       },
     });
 
-    // Extract post and comments
     const post = response.data[0].data.children[0].data;
-    const comments = response.data[1].data.children.map((child) => ({
-      id: child.data.id,
-      body: child.data.body || '',
-      author: child.data.author || 'Anonymous',
-      created_utc: child.data.created_utc,
-      profileImage: child.data.author
-        ? `https://www.redditstatic.com/avatars/avatar_default_${Math.floor(Math.random() * 20) + 1}.png`
-        : 'https://placehold.co/40x40?text=U&bg=gray&color=white', // Default avatar
-    }));
+    const comments = response.data[1].data.children
+      .filter((child) => child.kind === 't1') // Filter out non-comment items
+      .map((child) => ({
+        id: child.data.id,
+        body: child.data.body || '',
+        author: child.data.author || 'Anonymous',
+        created_utc: child.data.created_utc,
+        profileImage: child.data.author
+          ? `https://www.redditstatic.com/avatars/avatar_default_${Math.floor(Math.random() * 20) + 1}.png`
+          : 'https://placehold.co/40x40?text=U&bg=gray&color=white', // Default avatar
+      }));
 
     return {
       post: {
