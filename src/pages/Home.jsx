@@ -1,65 +1,13 @@
 import { useSelector } from 'react-redux';
-import { useState, useEffect } from 'react';
 import NavBar from '../components/Navigation/NavBar';
 import Card from '../components/UI/Card';
-import { getAccessToken, fetchRedditPosts } from '../services/redditAPI';
+import { usePosts } from '../hooks/usePosts'; // <-- new hook
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [after, setAfter] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const searchQuery = useSelector((state) => state.posts.searchQuery);
   const activeFilter = useSelector((state) => state.posts.activeFilter);
 
-  // 1. FRESH LOAD in useEffect
-  useEffect(() => {
-    setLoading(true);
-    (async () => {
-      try {
-        const accessToken = await getAccessToken();
-        // Fresh load: pass null as the "after" token
-        const { posts: newPosts, after: newAfter } = await fetchRedditPosts(
-          accessToken,
-          'all',
-          activeFilter.toLowerCase(),
-          10,
-          null
-        );
-
-        setPosts(newPosts);
-        setAfter(newAfter);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, [activeFilter]);
-
-  // 2. LOAD MORE for the Button
-  const handleLoadMore = async () => {
-    setLoading(true);
-    try {
-      const accessToken = await getAccessToken();
-      // Append more posts: pass existing 'after' token
-      const { posts: newPosts, after: newAfter } = await fetchRedditPosts(
-        accessToken,
-        'all',
-        activeFilter.toLowerCase(),
-        10,
-        after
-      );
-
-      setPosts((prev) => [...prev, ...newPosts]);
-      setAfter(newAfter);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { posts, after, loading, error, loadPosts } = usePosts(activeFilter);
 
   // Filter by search query
   const filteredPosts = posts.filter((post) =>
@@ -84,14 +32,12 @@ const Home = () => {
           <p className="text-white">No posts found.</p>
         )}
 
-        {/* Loading Indicator */}
         {loading && posts.length > 0 && <p className="text-white mt-4">Loading more...</p>}
 
-        {/* "Load More" Button */}
         {!loading && after && (
           <div className="flex justify-center mt-4">
             <button
-              onClick={handleLoadMore}
+              onClick={() => loadPosts(false)}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500"
             >
               Load More

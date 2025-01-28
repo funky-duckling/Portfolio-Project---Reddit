@@ -27,6 +27,13 @@ const Card = ({ post }) => {
         </div>
       )}
 
+      {/* Truncated Content Snippet (3 lines) */}
+      {post.content && (
+        <p className="text-gray-200 line-clamp-3 mb-4">
+          {post.content}
+        </p>
+      )}
+
       {/* Upvotes and Comments */}
       <div className="absolute bottom-3 right-4 flex items-center space-x-8">
         <div className="flex items-center space-x-1">
