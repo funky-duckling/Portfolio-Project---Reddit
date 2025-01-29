@@ -25,40 +25,6 @@ export const getAccessToken = async () => {
   }
 };
 
-// Function to fetch Reddit posts (including Search)
-export const fetchRedditPosts = async (
-  accessToken,
-  subreddit = 'all',
-  sort = 'hot',
-  limit = 10,
-  after = null,
-  searchQuery = ''
-) => {
-  try {
-    // Determine API endpoint (search or subreddit)
-    const url = searchQuery
-      ? `${REDDIT_API_URL}/r/${subreddit}/search.json?q=${encodeURIComponent(
-          searchQuery
-        )}&sort=${sort}&limit=${limit}${after ? `&after=${after}` : ''}`
-      : `${REDDIT_API_URL}/r/${subreddit}/${sort}.json?limit=${limit}${after ? `&after=${after}` : ''}`;
-
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'blue-it by Funky_duc',
-      },
-    });
-
-    return {
-      posts: response.data.data.children.map((child) => mapRedditPostToCard(child.data)),
-      after: response.data.data.after || null,
-    };
-  } catch (error) {
-    console.error('Error fetching Reddit posts:', error);
-    throw new Error('Unable to fetch posts from Reddit');
-  }
-};
-
 // Function to map API response to UI-friendly structure
 export const mapRedditPostToCard = (post) => {
   const largestImage =
@@ -79,13 +45,45 @@ export const mapRedditPostToCard = (post) => {
   };
 };
 
+// Function to fetch Reddit posts (including Search)
+export const fetchRedditPosts = async (
+  accessToken,
+  subreddit = 'all',
+  sort = 'hot',
+  limit = 10,
+  after = null,
+  searchQuery = ''
+) => {
+  try {
+    // Determine API endpoint (search or subreddit)
+    const url = searchQuery
+      ? `${REDDIT_API_URL}/r/${subreddit}/search.json?q=${encodeURIComponent(
+          searchQuery
+        )}&sort=${sort}&limit=${limit}${after ? `&after=${after}` : ''}`
+      : `${REDDIT_API_URL}/r/${subreddit}/${sort}.json?limit=${limit}${after ? `&after=${after}` : ''}`;
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    return {
+      posts: response.data.data.children.map((child) => mapRedditPostToCard(child.data)),
+      after: response.data.data.after || null,
+    };
+  } catch (error) {
+    console.error('Error fetching Reddit posts:', error);
+    throw new Error('Unable to fetch posts from Reddit');
+  }
+};
+
 // Function to fetch post details and comments
 export const fetchPostDetailsAndComments = async (accessToken, postId) => {
   try {
     const response = await axios.get(`${REDDIT_API_URL}/comments/${postId}.json`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        'User-Agent': 'blue-it by Funky_duc',
       },
     });
 

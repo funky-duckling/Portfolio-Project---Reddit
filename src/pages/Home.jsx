@@ -1,40 +1,31 @@
 import { useSelector } from 'react-redux';
 import NavBar from '../components/Navigation/NavBar';
 import Card from '../components/UI/Card';
-import { usePosts } from '../hooks/usePosts'; // <-- new hook
+import { usePosts } from '../hooks/usePosts';
 
 const Home = () => {
-  const searchQuery = useSelector((state) => state.posts.searchQuery);
   const activeFilter = useSelector((state) => state.posts.activeFilter);
-
-  const { posts, after, loading, error, loadPosts } = usePosts(activeFilter);
-
-  // Filter by search query
-  const filteredPosts = posts.filter((post) =>
-    post.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  if (loading && posts.length === 0) {
-    return <p className="text-white">Loading...</p>;
-  }
-
-  if (error) {
-    return <p className="text-red-500">Error: {error}</p>;
-  }
+  const { posts, after, loading, loadPosts } = usePosts(activeFilter);
 
   return (
     <div>
-      <NavBar />
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        {filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => <Card key={post.id} post={post} />)
+      <NavBar /> {/* ✅ NavBar always visible */}
+
+      <main className="max-w-4xl mx-auto px-4 py-4">
+        {/* ✅ Show posts immediately, even while loading */}
+        {posts.length > 0 ? (
+          posts.map((post) => <Card key={post.id} post={post} />)
         ) : (
-          <p className="text-white">No posts found.</p>
+          !loading && <p className="text-white">No posts found.</p>
         )}
 
-        {loading && posts.length > 0 && <p className="text-white mt-4">Loading more...</p>}
+        {/* ✅ Show "Loading more..." below posts instead of full-screen */}
+        {loading && posts.length > 0 && (
+          <p className="text-white text-center mt-4">Loading more posts...</p>
+        )}
 
-        {!loading && after && (
+        {/* ✅ Keep "Load More" button visible */}
+        {after && (
           <div className="flex justify-center mt-4">
             <button
               onClick={() => loadPosts(false)}

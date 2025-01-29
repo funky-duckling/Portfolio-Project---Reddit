@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchPostDetailsAndComments, getAccessToken } from '../services/redditAPI';
 import formatDistanceToNow from '../services/formatDistanceToNow';
+import NavBar from '../components/Navigation/NavBar';
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -37,6 +38,8 @@ const PostDetails = () => {
   }
 
   return (
+    <div>
+        <NavBar />
     <div className="max-w-full mx-5 px-4 py-8 relative flex justify-center">
       {/* Back Button (absolutely positioned) */}
       <button
@@ -93,6 +96,7 @@ const PostDetails = () => {
           <p className="text-gray-400">No comments available.</p>
         )}
       </div>
+    </div>
     </div>
   );
 };

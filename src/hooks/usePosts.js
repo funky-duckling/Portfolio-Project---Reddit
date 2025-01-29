@@ -19,7 +19,14 @@ export function usePosts(activeFilter) {
 
   // Function to load posts (fresh load or load more)
   const loadPosts = async (isFresh) => {
-    setLoading(true);
+    // ✅ Keep previous posts visible while new ones load
+    if (!isFresh) {
+      setLoading(true);
+    }
+  
+    // ✅ Save current scroll position before loading new posts
+    const scrollY = window.scrollY;
+  
     try {
       const accessToken = await getAccessToken();
       const { posts: newPosts, after: newAfter } = await fetchRedditPosts(
@@ -28,21 +35,26 @@ export function usePosts(activeFilter) {
         activeFilter.toLowerCase(),
         10,
         isFresh ? null : after,
-        searchQuery // Pass search query to the API
+        searchQuery
       );
-
+  
       if (isFresh) {
         setPosts(newPosts); // Overwrite posts for fresh load
       } else {
-        setPosts((prev) => [...prev, ...newPosts]); // Append posts for "Load More"
+        setPosts((prev) => [...prev, ...newPosts]); // Append new posts BELOW old ones
       }
-      setAfter(newAfter); // Update pagination token
+  
+      setAfter(newAfter);
+  
+      // ✅ Restore scroll position after loading
+      setTimeout(() => {
+        window.scrollTo(0, scrollY);
+      }, 0);
     } catch (err) {
-      setError(err.message); // Handle errors
+      setError(err.message);
     } finally {
-      setLoading(false); // End loading state
+      setLoading(false);
     }
   };
-
   return { posts, after, loading, error, loadPosts };
 }
