@@ -108,6 +108,7 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
         author: post.author,
         subreddit: post.subreddit_name_prefixed,
         upvotes: post.ups,
+        comments: post.num_comments,
         image:
           post.preview?.images[0]?.source?.url.replace(/&amp;/g, '&') ||
           (post.thumbnail?.startsWith('http') ? post.thumbnail : null),

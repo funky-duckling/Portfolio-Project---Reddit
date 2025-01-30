@@ -4,6 +4,7 @@ import { fetchPostDetailsAndComments, getAccessToken } from '../services/redditA
 import formatDistanceToNow from '../services/formatDistanceToNow';
 import NavBar from '../components/Navigation/NavBar';
 import { motion } from 'framer-motion';
+import { ArrowUpIcon, ArrowDownIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/solid';
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -33,7 +34,7 @@ const PostDetails = () => {
   if (loading) {
     return (
         <div>
-          <NavBar /> {/* ✅ Ensure NavBar is always visible */}
+          <NavBar /> 
           <p className="text-white text-center mt-4">Loading...</p>
           <div className="flex justify-center mt-2" >
           <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-blue-500"></div>
@@ -69,7 +70,19 @@ const PostDetails = () => {
 
       <div className="max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
       {post && (
-        <div className="bg-gray-700 text-white rounded-lg shadow-xl p-6 mb-4 mt-8">
+        <div className="bg-gray-700 text-white rounded-lg shadow-xl p-6 mb-4 mt-8 relative">
+        {/* ✅ Upvotes & Comments (Positioned Top-Right) */}
+        <div className="absolute top-3 right-4 flex items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-1">
+            <ArrowUpIcon className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400 cursor-pointer hover:text-green-500" />
+            <span className="text-xs sm:text-sm">{post.upvotes?.toLocaleString()}</span>
+            <ArrowDownIcon className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400 cursor-pointer hover:text-red-500" />
+          </div>
+          <div className="flex items-center gap-1">
+            <ChatBubbleLeftIcon className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400" />
+            <span className="text-xs sm:text-sm">{post.comments?.toLocaleString()}</span>
+          </div>
+        </div>
           <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
           <h1 className="text-xl font-bold mb-4">{post.title}</h1>
           {post.image && (
