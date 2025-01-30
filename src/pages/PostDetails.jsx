@@ -85,15 +85,22 @@ const PostDetails = () => {
         </div>
           <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
           <h1 className="text-xl font-bold mb-4">{post.title}</h1>
-          {post.image && (
-            <div className="w-full flex items-center justify-center overflow-hidden rounded-lg">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="object-cover object-center max-w-full h-auto"
-              />
-            </div>
-          )}
+          {post.video ? (
+  <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
+    <video controls className="max-w-full h-auto rounded-lg">
+      <source src={post.video} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+) : post.image ? (
+  <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
+    <img
+      src={post.image}
+      alt={post.title}
+      className="object-cover object-center max-w-full h-auto"
+    />
+  </div>
+) : null}
           <p className="text-gray-300 mb-4">{post.content}</p>
           <p className="text-gray-400 text-sm">
             Posted by {post.author} {formatDistanceToNow(post.created_utc)}

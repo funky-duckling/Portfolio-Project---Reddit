@@ -41,6 +41,7 @@ export const mapRedditPostToCard = (post) => {
     content: post.selftext || '',
     logo: post.subreddit_icon ? post.subreddit_icon : '',
     image: largestImage,
+    video: post.media?.reddit_video?.fallback_url || null,
     created_utc: post.created_utc,
   };
 };
@@ -100,6 +101,8 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
           : 'https://placehold.co/40x40?text=U&bg=gray&color=white', // Default avatar
       }));
 
+      const videoUrl = post.media?.reddit_video?.fallback_url || null;
+
     return {
       post: {
         id: post.id,
@@ -112,6 +115,7 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
         image:
           post.preview?.images[0]?.source?.url.replace(/&amp;/g, '&') ||
           (post.thumbnail?.startsWith('http') ? post.thumbnail : null),
+        video: videoUrl,
         created_utc: post.created_utc,
       },
       comments,

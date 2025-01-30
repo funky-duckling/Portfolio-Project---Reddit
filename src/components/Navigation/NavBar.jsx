@@ -14,7 +14,7 @@ const NavBar = () => {
         </div>
 
         {/* Search bar (Centered on mobile & desktop) */}
-        <div className="w-full sm:w-auto justify-center">
+        <div className="w-full sm:w-auto">
           <SearchBar />
         </div>
 

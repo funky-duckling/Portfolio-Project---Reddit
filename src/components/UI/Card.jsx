@@ -16,8 +16,15 @@ const Card = ({ post }) => {
       {/* Post Title */}
       <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-4">{post.title}</h2>
 
-      {/* Optional Post Image */}
-      {post.image && (
+      {/* ✅ Video or Image Preview */}
+      {post.video ? (
+        <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
+          <video controls className="max-w-full h-auto rounded-lg">
+            <source src={post.video} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      ) : post.image ? (
         <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
           <img
             src={post.image}
@@ -25,7 +32,7 @@ const Card = ({ post }) => {
             className="object-cover object-center w-full"
           />
         </div>
-      )}
+      ) : null}
 
       {/* Truncated Content Snippet (3 lines) */}
       {post.content && (
@@ -68,6 +75,7 @@ Card.propTypes = {
     content: PropTypes.string,
     logo: PropTypes.string,
     image: PropTypes.string,
+    video: PropTypes.string, // ✅ New prop for video
     created_utc: PropTypes.number.isRequired,
   }).isRequired,
 };
