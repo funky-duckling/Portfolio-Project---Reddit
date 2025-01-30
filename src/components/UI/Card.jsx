@@ -8,13 +8,13 @@ const Card = ({ post }) => {
     <Link
       to={`/post/${post.id}`}
       state={{ post }}
-      className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 relative block hover:bg-gray-600"
+      className="card bg-gray-700 text-white rounded-lg shadow-xl m-4 p-4 block hover:bg-gray-600"
     >
       {/* Subreddit Name */}
-      <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
+      <p className="text-gray-400 text-xs sm:text-sm mb-1">{post.subreddit}</p>
 
       {/* Post Title */}
-      <h2 className="text-xl font-bold mb-4">{post.title}</h2>
+      <h2 className="text-lg sm:text-xl font-bold mb-2 sm:mb-4">{post.title}</h2>
 
       {/* Optional Post Image */}
       {post.image && (
@@ -22,35 +22,37 @@ const Card = ({ post }) => {
           <img
             src={post.image}
             alt="Post"
-            className="object-cover object-center max-w-full h-auto"
+            className="object-cover object-center w-full"
           />
         </div>
       )}
 
       {/* Truncated Content Snippet (3 lines) */}
       {post.content && (
-        <p className="text-gray-200 line-clamp-3 mb-4">
+        <p className="text-gray-200 text-sm sm:text-base line-clamp-3 mb-4">
           {post.content}
         </p>
       )}
 
-      {/* Upvotes and Comments */}
-      <div className="absolute bottom-3 right-4 flex items-center space-x-8">
-        <div className="flex items-center space-x-1">
-          <ArrowUpIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-green-500" />
-          <span>{post.upvotes.toLocaleString()}</span>
-          <ArrowDownIcon className="w-6 h-6 text-gray-400 cursor-pointer hover:text-red-500" />
-        </div>
-        <div className="flex items-center space-x-1">
-          <ChatBubbleLeftIcon className="w-6 h-6 text-gray-400" />
-          <span>{post.comments.toLocaleString()}</span>
+      {/* Upvotes and Comments (Adjusted for Mobile) */}
+      <div className="flex justify-between items-center mt-2">
+        {/* Time Ago */}
+        <p className="text-gray-400 text-xs sm:text-sm">
+          {formatDistanceToNow(post.created_utc)}
+        </p>
+
+        <div className="flex items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-1">
+            <ArrowUpIcon className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400 cursor-pointer hover:text-green-500" />
+            <span className="text-xs sm:text-sm">{post.upvotes.toLocaleString()}</span>
+            <ArrowDownIcon className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400 cursor-pointer hover:text-red-500" />
+          </div>
+          <div className="flex items-center gap-1">
+            <ChatBubbleLeftIcon className="w-5 sm:w-6 h-5 sm:h-6 text-gray-400" />
+            <span className="text-xs sm:text-sm">{post.comments.toLocaleString()}</span>
+          </div>
         </div>
       </div>
-
-      {/* Time Ago */}
-      <p className="text-gray-400 text-sm mt-2">
-        {formatDistanceToNow(post.created_utc)}
-      </p>
     </Link>
   );
 };
@@ -58,7 +60,7 @@ const Card = ({ post }) => {
 // Define prop types
 Card.propTypes = {
   post: PropTypes.shape({
-    id: PropTypes.string.isRequired, // Unique post ID
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     subreddit: PropTypes.string.isRequired,
     upvotes: PropTypes.number.isRequired,

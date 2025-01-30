@@ -3,19 +3,19 @@ import { setActiveFilter } from '../../features/posts/postsSlice';
 
 const NavButtons = () => {
   const dispatch = useDispatch();
-  const activeFilter = useSelector((state) => state.posts.activeFilter); // Access active filter from Redux store
+  const activeFilter = useSelector((state) => state.posts.activeFilter);
 
   const handleButtonClick = (filter) => {
-    dispatch(setActiveFilter(filter)); // Update active filter in Redux
+    dispatch(setActiveFilter(filter));
   };
 
   return (
-    <div className="flex items-center space-x-4 justify-end">
+    <div className="flex flex-wrap justify-center sm:justify-end gap-2">
       {['New', 'Top', 'Hot'].map((filter) => (
         <button
           key={filter}
           onClick={() => handleButtonClick(filter)}
-          className={`px-4 py-2 rounded-lg ${
+          className={`px-8 py-2 rounded-lg w-24 sm:w-auto text-sm ${
             activeFilter === filter
               ? 'bg-blue-600 text-white font-bold shadow-md hover:bg-blue-600'
               : 'text-white font-bold shadow-md'

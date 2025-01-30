@@ -49,6 +49,14 @@ const PostDetails = () => {
   return (
   <div>
   <NavBar />
+
+  <button
+        onClick={() => navigate(-1)}
+        className="bg-blue-600 text-white px-4 py-2 rounded mt-4 hover:bg-blue-500 fixed left-5 z-10"
+      >
+        Back
+      </button>
+
     <motion.div 
       className="mx-auto"
       initial={{ opacity: 0, y: 10 }}
@@ -57,22 +65,15 @@ const PostDetails = () => {
       transition={{ duration: 0.4 }}
     >
         
-    <div className="max-w-full mx-5 px-4 py-8 relative flex justify-center">
-      {/* Back Button (absolutely positioned) */}
-      <button
-        onClick={() => navigate(-1)}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 fixed left-8 top-24"
-      >
-        Back
-      </button>
+    <div className="max-w-full mx-5 py-8 relative flex justify-center">
 
-      <div className="max-w-4xl">
+      <div className="max-w-full sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
       {post && (
-        <div className="bg-gray-700 text-white rounded-lg shadow-xl p-6 mb-6">
+        <div className="bg-gray-700 text-white rounded-lg shadow-xl p-6 mb-4 mt-8">
           <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
           <h1 className="text-xl font-bold mb-4">{post.title}</h1>
           {post.image && (
-            <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
+            <div className="w-full flex items-center justify-center overflow-hidden rounded-lg">
               <img
                 src={post.image}
                 alt={post.title}
@@ -102,7 +103,7 @@ const PostDetails = () => {
                 />
                 <p className="text-white font-semibold">{comment.author}</p>
               </div>
-              <p className="text-gray-300 mt-2">{comment.body}</p>
+              <p className="text-gray-300 mt-2 break-all">{comment.body}</p>
               <p className="text-gray-400 text-sm mt-2">
                 {formatDistanceToNow(comment.created_utc)}
               </p>
