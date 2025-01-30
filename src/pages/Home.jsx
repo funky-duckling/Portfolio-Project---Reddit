@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import NavBar from '../components/Navigation/NavBar';
 import Card from '../components/UI/Card';
 import { usePosts } from '../hooks/usePosts';
+import { motion } from 'framer-motion';
 
 const Home = () => {
   const activeFilter = useSelector((state) => state.posts.activeFilter);
@@ -14,14 +15,25 @@ const Home = () => {
       <main className="max-w-4xl mx-auto px-4 py-4">
         {/* ✅ Show posts immediately, even while loading */}
         {posts.length > 0 ? (
-          posts.map((post) => <Card key={post.id} post={post} />)
+          posts.map((post) => (
+          <motion.div
+            key={post.id}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+          <Card post={post} />
+          </motion.div>
+          ))
         ) : (
           !loading && <p className="text-white">No posts found.</p>
         )}
 
         {/* ✅ Show "Loading more..." below posts instead of full-screen */}
         {loading && posts.length > 0 && (
-          <p className="text-white text-center mt-4">Loading more posts...</p>
+          <div className="flex justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
+        </div>
         )}
 
         {/* ✅ Keep "Load More" button visible */}

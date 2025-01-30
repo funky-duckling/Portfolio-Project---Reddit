@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { fetchPostDetailsAndComments, getAccessToken } from '../services/redditAPI';
 import formatDistanceToNow from '../services/formatDistanceToNow';
 import NavBar from '../components/Navigation/NavBar';
+import { motion } from 'framer-motion';
 
 const PostDetails = () => {
   const { postId } = useParams();
@@ -30,7 +31,15 @@ const PostDetails = () => {
   }, [postId]);
 
   if (loading) {
-    return <p className="text-white">Loading...</p>;
+    return (
+        <div>
+          <NavBar /> {/* ✅ Ensure NavBar is always visible */}
+          <p className="text-white text-center mt-4">Loading...</p>
+          <div className="flex justify-center mt-2" >
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-blue-500"></div>
+          </div>
+        </div>
+      );
   }
 
   if (error) {
@@ -38,18 +47,25 @@ const PostDetails = () => {
   }
 
   return (
-    <div>
-        <NavBar />
+  <div>
+  <NavBar />
+    <motion.div 
+      className="mx-auto"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.4 }}
+    >
+        
     <div className="max-w-full mx-5 px-4 py-8 relative flex justify-center">
       {/* Back Button (absolutely positioned) */}
       <button
         onClick={() => navigate(-1)}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 fixed left-8 top-8"
+        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 fixed left-8 top-24"
       >
         Back
       </button>
 
-      {/* Post Container (with left margin to avoid the button) */}
       <div className="max-w-4xl">
       {post && (
         <div className="bg-gray-700 text-white rounded-lg shadow-xl p-6 mb-6">
@@ -97,6 +113,8 @@ const PostDetails = () => {
         )}
       </div>
     </div>
+
+    </motion.div>
     </div>
   );
 };
