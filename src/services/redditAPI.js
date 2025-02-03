@@ -27,9 +27,18 @@ export const getAccessToken = async () => {
 
 // Function to map API response to UI-friendly structure
 export const mapRedditPostToCard = (post) => {
-  const largestImage =
-    post.preview?.images[0]?.resolutions?.slice(-1)[0]?.url.replace(/&amp;/g, '&') ||
-    null;
+  // Extract single image (fallback for non-gallery posts)
+  const previewImages = post.preview?.images?.map((img) =>
+    img.source?.url.replace(/&amp;/g, '&')
+  ) || [];
+
+  // Extract multiple images from gallery
+  const galleryImages = post.gallery_data?.items?.map((item) =>
+    post.media_metadata?.[item.media_id]?.s?.u.replace(/&amp;/g, '&')
+  ) || [];
+
+  // Combine both image sources
+  const images = [...previewImages, ...galleryImages];
 
   return {
     id: post.id,
@@ -39,9 +48,9 @@ export const mapRedditPostToCard = (post) => {
     upvotes: post.ups,
     comments: post.num_comments,
     content: post.selftext || '',
-    logo: post.subreddit_icon ? post.subreddit_icon : '',
-    image: largestImage,
-    video: post.media?.reddit_video?.fallback_url || null,
+    logo: post.subreddit_icon || '',
+    images, // ✅ Now supports multiple images
+    video: post.media?.reddit_video?.fallback_url || null, // ✅ Video handling remains
     created_utc: post.created_utc,
   };
 };

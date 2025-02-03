@@ -22,3 +22,13 @@ button {
 button:hover {
   @apply bg-gray-600;
 }
+
+/* Change Swiper navigation arrows color */
+.swiper-button-prev, .swiper-button-next {
+  color: white !important; /* Default arrow color */
+  transition: color 0.2s ease-in-out !important;
+}
+
+.swiper-button-prev:hover, .swiper-button-next:hover {
+  color: #3b82f6 !important; /* Blue color on hover */
+}
