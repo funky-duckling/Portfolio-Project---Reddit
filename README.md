@@ -53,17 +53,20 @@ The following wireframes guided the app's design and layout:
 To run the project locally, follow these steps:  
 
 ### **1️⃣ Clone the repository:**  
-```sh
+```
 git clone https://github.com/funky-duckling/Portfolio-Project---Reddit.git
 cd Portfolio-Project---Reddit
+```
 
 ### **2️⃣ Install dependencies:**
-```sh
+```
 npm install
+```
 
 ### **3️⃣ Run the app:**
-```sh
+```
 npm run dev
+```
 
 The app will now be available at http://localhost:5173.
 
