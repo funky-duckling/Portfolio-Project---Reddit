@@ -44,7 +44,7 @@ The following wireframes guided the app's design and layout:
 📌 **Search Results (Desktop & Mobile)**  
 📌 **Post Details (Desktop & Mobile)**  
 
-[View Wireframes Here]([#src/assets/wireframes](https://github.com/funky-duckling/Portfolio-Project---Reddit/tree/cdce640dac10ac27d075d4f606431d305614c888/src/assets/wireframes)) 
+[View Wireframes Here](https://github.com/funky-duckling/Portfolio-Project---Reddit/tree/cdce640dac10ac27d075d4f606431d305614c888/src/assets/wireframes)
 
 ---
 
