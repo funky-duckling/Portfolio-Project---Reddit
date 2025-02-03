@@ -5,8 +5,8 @@ Welcome to the **Reddit Clone App**! This is a fully functional, responsive Redd
 ## **Features**  
 
 ✅ **Browse Reddit posts** – View posts from multiple subreddits with images, videos, and metadata (upvotes, comments).  
-✅ **Search functionality** – Enter search terms to find relevant Reddit posts dynamically.
-✅ **Sorting Filters** - Easily switch between **Hot, New, and Top**.
+✅ **Search functionality** – Enter search terms to find relevant Reddit posts dynamically.  
+✅ **Sorting Filters** - Easily switch between **Hot, New, and Top**.  
 ✅ **Post details page** – Click on a post to view its full content, media, and comments.  
 ✅ **Load More functionality** – Seamlessly load additional posts without losing your scroll position.  
 ✅ **Responsive design** – Optimized for **desktop and mobile** using **Tailwind CSS**.  
