@@ -10,10 +10,10 @@ const Home = () => {
 
   return (
     <div>
-      <NavBar /> {/* ✅ NavBar always visible */}
+      <NavBar /> {/* NavBar always visible */}
 
       <main className="max-w-4xl mx-auto px-4 py-4">
-        {/* ✅ Show posts immediately, even while loading */}
+        {/* Show posts immediately, even while loading */}
         {posts.length > 0 ? (
           posts.map((post) => (
           <motion.div
@@ -29,14 +29,13 @@ const Home = () => {
           !loading && <p className="text-white">No posts found.</p>
         )}
 
-        {/* ✅ Show "Loading more..." below posts instead of full-screen */}
+        {/* Show "Loading more..." */}
         {loading && posts.length > 0 && (
           <div className="flex justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
         </div>
         )}
 
-        {/* ✅ Keep "Load More" button visible */}
         {after && (
           <div className="flex justify-center mt-4">
             <button

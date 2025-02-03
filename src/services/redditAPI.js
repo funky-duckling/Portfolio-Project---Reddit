@@ -98,6 +98,17 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
     });
 
     const post = response.data[0].data.children[0].data;
+    
+    const previewImages = post.preview?.images?.map((img) =>
+      img.source?.url.replace(/&amp;/g, '&')
+    ) || [];
+    
+    const galleryImages = post.gallery_data?.items?.map((item) =>
+      post.media_metadata?.[item.media_id]?.s?.u.replace(/&amp;/g, '&')
+    ) || [];
+    
+    const images = [...previewImages, ...galleryImages];
+
     const comments = response.data[1].data.children
       .filter((child) => child.kind === 't1') // Filter out non-comment items
       .map((child) => ({
@@ -121,9 +132,7 @@ export const fetchPostDetailsAndComments = async (accessToken, postId) => {
         subreddit: post.subreddit_name_prefixed,
         upvotes: post.ups,
         comments: post.num_comments,
-        image:
-          post.preview?.images[0]?.source?.url.replace(/&amp;/g, '&') ||
-          (post.thumbnail?.startsWith('http') ? post.thumbnail : null),
+        images,
         video: videoUrl,
         created_utc: post.created_utc,
       },
