@@ -90,7 +90,7 @@ Card.propTypes = {
     comments: PropTypes.number.isRequired,
     content: PropTypes.string,
     logo: PropTypes.string,
-    images: PropTypes.arrayOf(PropTypes.string), // ✅ Ensures `images` is correctly treated as an array
+    images: PropTypes.arrayOf(PropTypes.string), // Ensures `images` is correctly treated as an array
     video: PropTypes.string,
     created_utc: PropTypes.number.isRequired,
   }).isRequired,

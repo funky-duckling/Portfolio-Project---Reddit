@@ -29,9 +29,9 @@ const Home = () => {
           !loading && <p className="text-white">No posts found.</p>
         )}
 
-        {/* Show "Loading more..." */}
-        {loading && posts.length > 0 && (
-          <div className="flex justify-center">
+        {/* Show loading spinner */}
+        {loading && (
+          <div className="flex justify-center" data-testid="loading-spinner">
           <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
         </div>
         )}
