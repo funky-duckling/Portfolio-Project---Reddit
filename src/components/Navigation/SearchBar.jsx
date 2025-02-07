@@ -1,20 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearchQuery } from '../../features/posts/postsSlice';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom'; // Import URL search params
 
 const SearchBar = () => {
   const dispatch = useDispatch();
   const searchQuery = useSelector((state) => state.posts.searchQuery);
   const [inputValue, setInputValue] = useState(searchQuery);
+  const [searchParams, setSearchParams] = useSearchParams(); // Manage URL params
 
   const handleSearchChange = (e) => {
     const newQuery = e.target.value;
     setInputValue(newQuery);
 
-    clearTimeout(window.searchTimeout); // Prevent spamming API
+    clearTimeout(window.searchTimeout);
     window.searchTimeout = setTimeout(() => {
       dispatch(setSearchQuery(newQuery));
-    }, 300); // Only fire API call after 300ms of no typing
+
+      // ✅ Update the URL
+      setSearchParams({ q: newQuery });
+    }, 300);
   };
 
   return (
@@ -22,7 +27,7 @@ const SearchBar = () => {
       <input
         type="text"
         placeholder="Search..."
-        value={inputValue} // Use local state for instant UI updates
+        value={inputValue}
         onChange={handleSearchChange}
         className="px-4 py-2 rounded-md w-full text-black"
       />
