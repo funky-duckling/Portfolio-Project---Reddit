@@ -92,7 +92,7 @@ const PostDetails = () => {
                 <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
                 <h1 className="text-xl font-bold mb-4">{post.title}</h1>
 
-                {/* ✅ Video or Image Carousel */}
+                {/* Video or Image Carousel */}
                 {post.video ? (
                   <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
                     <video controls className="max-w-full h-auto rounded-lg max-h-[500px] object-contain">

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { vi } from 'vitest';
 import { getAccessToken, fetchRedditPosts, fetchPostDetailsAndComments } from '../redditAPI';
 
-vi.mock('axios'); // ✅ Mock axios to prevent real API calls
+vi.mock('axios'); // Mock axios to prevent real API calls
 
 describe('Reddit API Functions', () => {
   

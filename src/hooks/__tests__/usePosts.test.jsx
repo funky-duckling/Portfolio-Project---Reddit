@@ -6,7 +6,7 @@ import postsReducer, { setSearchQuery } from '../../features/posts/postsSlice';
 import { vi } from 'vitest';
 import { getAccessToken, fetchRedditPosts } from '../../services/redditAPI';
 
-// 🛑 Mock API calls
+// Mock API calls
 vi.mock('../../services/redditAPI', () => ({
   getAccessToken: vi.fn(),
   fetchRedditPosts: vi.fn(),
@@ -17,7 +17,6 @@ const mockStore = configureStore({
   reducer: { posts: postsReducer },
 });
 
-// ✅ Move mock data to the top so all tests can use it
 const mockPosts = [
   { id: '1', title: 'Test Post 1', subreddit: 'r/test', upvotes: 10, comments: 5 },
 ];
@@ -65,7 +64,7 @@ describe('usePosts Hook', () => {
   
     getAccessToken.mockResolvedValue('mock_access_token');
   
-    // 🛑 First fetch should return mockPosts
+    // First fetch should return mockPosts
     fetchRedditPosts.mockResolvedValueOnce({ posts: mockPosts, after: 'next_page' });
   
     const { result } = renderHook(() => usePosts('Hot'), {
@@ -75,17 +74,16 @@ describe('usePosts Hook', () => {
     // Wait for initial posts to load
     await act(async () => {});
   
-    // ✅ Ensure mockPosts loaded first
+    // Ensure mockPosts loaded first
     expect(result.current.posts).toEqual(mockPosts);
   
-    // 🛑 Second fetch should return mockNewPosts (appending to mockPosts)
+    // Second fetch should return mockNewPosts (appending to mockPosts)
     fetchRedditPosts.mockResolvedValueOnce({ posts: mockNewPosts, after: 'next_page_2' });
   
     await act(async () => {
       await result.current.loadPosts(false);
     });
   
-    // ✅ Expect both mockPosts and mockNewPosts to be present
     expect(result.current.posts).toEqual([...mockPosts, ...mockNewPosts]);
     expect(result.current.after).toBe('next_page_2');
   });

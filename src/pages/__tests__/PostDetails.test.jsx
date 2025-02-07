@@ -7,7 +7,7 @@ import PostDetails from '../PostDetails';
 import { fetchPostDetailsAndComments } from '../../services/redditAPI';
 import { vi } from 'vitest';
 
-// ✅ Mock API function
+// Mock API function
 vi.mock('../../services/redditAPI', async (importOriginal) => {
   const actual = await importOriginal();
   return {
@@ -18,10 +18,10 @@ vi.mock('../../services/redditAPI', async (importOriginal) => {
 });
 
 
-// ✅ Create a mock Redux store with default state
+// Create a mock Redux store with default state
 const mockStore = configureStore({
   reducer: {
-    posts: postReducer, // ✅ Ensure the store has the necessary reducers
+    posts: postReducer, // Ensure the store has the necessary reducers
   },
 });
 

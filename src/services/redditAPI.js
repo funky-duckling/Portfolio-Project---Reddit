@@ -49,8 +49,8 @@ export const mapRedditPostToCard = (post) => {
     comments: post.num_comments,
     content: post.selftext || '',
     logo: post.subreddit_icon || '',
-    images, // ✅ Now supports multiple images
-    video: post.media?.reddit_video?.fallback_url || null, // ✅ Video handling remains
+    images, // Supports multiple images
+    video: post.media?.reddit_video?.fallback_url || null,
     created_utc: post.created_utc,
   };
 };

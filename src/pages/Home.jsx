@@ -10,10 +10,9 @@ const Home = () => {
 
   return (
     <div>
-      <NavBar /> {/* NavBar always visible */}
+      <NavBar />
 
       <main className="max-w-4xl mx-auto px-4 py-4">
-        {/* Show posts immediately, even while loading */}
         {posts.length > 0 ? (
           posts.map((post) => (
           <motion.div

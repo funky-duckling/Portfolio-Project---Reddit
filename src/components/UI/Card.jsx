@@ -29,7 +29,7 @@ const Card = ({ post }) => {
             Your browser does not support the video tag.
           </video>
         </div>
-      ) : post.images?.length > 1 ? ( // ✅ Only show Swiper if more than 1 image exists
+      ) : post.images?.length > 1 ? ( // Only show Swiper if more than 1 image exists
         <Swiper
           modules={[Navigation, Pagination]}
           navigation
@@ -44,7 +44,7 @@ const Card = ({ post }) => {
             </SwiperSlide>
           ))}
         </Swiper>
-      ) : post.images?.length === 1 ? ( // ✅ Show single image if only one exists
+      ) : post.images?.length === 1 ? ( // Show single image if only one exists
         <div className="w-full flex items-center justify-center mb-4 overflow-hidden rounded-lg">
           <img src={post.images[0]} alt="Post" className="w-full max-h-[500px] object-contain" />
         </div>

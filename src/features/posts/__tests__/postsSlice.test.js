@@ -5,7 +5,7 @@ describe('postsSlice Reducers', () => {
     expect(postsReducer(undefined, {})).toEqual({
       posts: [],
       searchQuery: '',
-      activeFilter: 'Hot', // ✅ Match the actual default value from postsSlice.js
+      activeFilter: 'Hot', // Match the actual default value from postsSlice.js
     });
   });
 

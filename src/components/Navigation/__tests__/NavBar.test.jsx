@@ -5,10 +5,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import postsReducer from '../../../features/posts/postsSlice';
 import NavBar from '../NavBar';
 
-// ✅ Correct Redux store setup
+// Mock Redux Store
 const store = configureStore({
   reducer: {
-    posts: postsReducer, // ✅ Ensure this matches the Redux slice
+    posts: postsReducer, // Ensure this matches the Redux slice
   },
 });
 

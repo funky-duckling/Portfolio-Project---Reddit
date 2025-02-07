@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import postsReducer, { setActiveFilter } from '../../../features/posts/postsSlice';
 import NavButtons from '../NavButtons';
 
-// ✅ Mock Redux Store
+// Mock Redux Store
 const setupStore = (initialState) =>
   configureStore({
     reducer: { posts: postsReducer },
@@ -40,7 +40,7 @@ describe('NavButtons Component', () => {
     // Click "Top" button
     await user.click(screen.getByText(/Top/i));
 
-    // ✅ Ensure Redux state is updated
+    // Ensure Redux state is updated
     expect(store.getState().posts.activeFilter).toBe('Top');
   });
 
@@ -53,7 +53,7 @@ describe('NavButtons Component', () => {
       </Provider>
     );
 
-    // ✅ "Top" button should have active class (bg-blue-600)
+    // "Top" button should have active class (bg-blue-600)
     const topButton = screen.getByText(/Top/i);
     expect(topButton).toHaveClass('bg-blue-600');
   });

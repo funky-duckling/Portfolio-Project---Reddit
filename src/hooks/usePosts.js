@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'; // Import useSelector to get searchQuery from Redux
+import { useSelector } from 'react-redux';
 import { getAccessToken, fetchRedditPosts } from '../services/redditAPI';
 
 export function usePosts(activeFilter) {
@@ -19,12 +19,11 @@ export function usePosts(activeFilter) {
 
   // Function to load posts (fresh load or load more)
   const loadPosts = async (isFresh) => {
-    // ✅ Keep previous posts visible while new ones load
     if (!isFresh) {
       setLoading(true);
     }
   
-    // ✅ Save current scroll position before loading new posts
+    // Save current scroll position before loading new posts
     const scrollY = window.scrollY;
   
     try {
@@ -46,7 +45,7 @@ export function usePosts(activeFilter) {
   
       setAfter(newAfter);
   
-      // ✅ Restore scroll position after loading
+      // Restore scroll position after loading
       setTimeout(() => {
         window.scrollTo(0, scrollY);
       }, 0);

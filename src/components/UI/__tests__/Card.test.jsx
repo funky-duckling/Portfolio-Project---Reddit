@@ -17,7 +17,7 @@ const mockPost = {
 describe('Card Component', () => {
   test('renders the Card component with a title', () => {
     render(
-      <MemoryRouter> {/* Wrap in MemoryRouter to avoid context errors */}
+      <MemoryRouter>
         <Card post={mockPost} />
       </MemoryRouter>
     );

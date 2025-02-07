@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import postsReducer, { setSearchQuery } from '../../../features/posts/postsSlice';
 import SearchBar from '../SearchBar';
 
-// ✅ Mock Redux Store
+// Mock Redux Store
 const setupStore = (initialState) =>
   configureStore({
     reducer: { posts: postsReducer },
