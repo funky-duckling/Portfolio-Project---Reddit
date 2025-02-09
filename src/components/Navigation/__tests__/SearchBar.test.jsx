@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import userEvent from '@testing-library/user-event';
 import postsReducer, { setSearchQuery } from '../../../features/posts/postsSlice';
 import SearchBar from '../SearchBar';
+import { MemoryRouter } from 'react-router-dom'; // ✅ Import MemoryRouter
 
 // Mock Redux Store
 const setupStore = (initialState) =>
@@ -18,7 +19,9 @@ describe('SearchBar Component', () => {
 
     render(
       <Provider store={store}>
-        <SearchBar />
+        <MemoryRouter> {/* ✅ Wrap with MemoryRouter */}
+          <SearchBar />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -31,7 +34,9 @@ describe('SearchBar Component', () => {
 
     render(
       <Provider store={store}>
-        <SearchBar />
+        <MemoryRouter> {/* ✅ Wrap with MemoryRouter */}
+          <SearchBar />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -47,7 +52,9 @@ describe('SearchBar Component', () => {
 
     render(
       <Provider store={store}>
-        <SearchBar />
+        <MemoryRouter> {/* ✅ Wrap with MemoryRouter */}
+          <SearchBar />
+        </MemoryRouter>
       </Provider>
     );
 

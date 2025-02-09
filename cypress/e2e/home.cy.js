@@ -14,36 +14,34 @@ describe("Home Page", () => {
   });
 
   it("should allow searching and update the URL", () => {
-    // Wait for posts to load before typing
-    cy.get(".card", { timeout: 8000 }).should("be.visible"); 
-
+    cy.get(".card", { timeout: 8000 }).should("be.visible");
+  
     cy.get("input[placeholder='Search...']")
       .should("be.visible") 
       .type("React");
-
-    cy.url().should("include", "?q=React"); // Ensure query is in URL
-
-    // Ensure posts have updated
-    cy.get(".card")
-      .children()
-      .should("have.length.greaterThan", 0) // At least one post appears
-      .and("contain.text", "React"); // One post should contain "React"
+  
+    cy.url().should("include", "?q=React");
+  
+    // ✅ Wait for search results with "React" in the text
+    cy.get(".card", { timeout: 8000 })
+      .should("have.length.greaterThan", 0)
+      .should("contain.text", "React"); // ✅ Look for "React" in any post, not just `.first()`
   });
-
+  
   it("should show 'No posts found' for a search with no results", () => {
     cy.get(".card", { timeout: 8000 }).should("be.visible"); // Wait for posts
-
-    const randomQuery = `asjdhaksdljasd${Date.now()}`; // A random nonsense query
-
+  
+    const randomQuery = `noresults${Date.now()}`;
+  
     cy.get("input[placeholder='Search...']")
-      .should("be.visible") // Ensure search bar is visible
+      .should("be.visible") 
       .type(randomQuery);
-
-    cy.url().should("include", randomQuery);
-
-    cy.wait(500);
-
-    cy.get(".card").should("not.exist"); // Ensure no results are displayed
-    cy.contains("p", "No posts found.").should("be.visible"); // Confirm message
-});
+  
+    cy.url().should("include", `q=${randomQuery}`);
+  
+    cy.wait(1000); // Increase wait time to ensure UI updates
+  
+    cy.get(".card").should("not.exist");
+    cy.contains("p", "No posts found.").should("be.visible");
+  });
   });

@@ -61,12 +61,12 @@ describe('SearchPage Component', () => {
   test('displays posts matching the search query', () => {
     render(
       <Provider store={mockStore('React', mockPosts)}>
-        <MemoryRouter>
+        <MemoryRouter initialEntries={["/?q=React"]}> {/* ✅ Ensure URL reflects the Redux state */}
           <SearchPage />
         </MemoryRouter>
       </Provider>
     );
-
+  
     expect(screen.getByText('React Testing')).toBeInTheDocument();
     expect(screen.queryByText('Vitest Guide')).not.toBeInTheDocument();
   });
@@ -74,12 +74,12 @@ describe('SearchPage Component', () => {
   test('displays "No posts found" when no results match the query', () => {
     render(
       <Provider store={mockStore('Nonexistent', mockPosts)}>
-        <MemoryRouter>
+        <MemoryRouter initialEntries={["/?q=Nonexistent"]}> {/* ✅ Ensure URL reflects the Redux state */}
           <SearchPage />
         </MemoryRouter>
       </Provider>
     );
-
-    expect(screen.getByText(/no posts found/i)).toBeInTheDocument();
+  
+    expect(screen.getByText(/no posts found/i)).toBeInTheDocument(); // ✅ Check if the message exists
   });
 });

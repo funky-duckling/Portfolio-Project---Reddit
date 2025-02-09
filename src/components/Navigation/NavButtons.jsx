@@ -14,6 +14,7 @@ const NavButtons = () => {
       {['New', 'Top', 'Hot'].map((filter) => (
         <button
           key={filter}
+          data-test={`filter-${filter.toLowerCase()}`}
           onClick={() => handleButtonClick(filter)}
           className={`px-8 py-2 rounded-lg w-24 sm:w-auto text-sm ${
             activeFilter === filter

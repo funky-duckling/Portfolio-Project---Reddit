@@ -89,8 +89,8 @@ const PostDetails = () => {
                 </div>
 
                 {/* Post Subreddit & Title */}
-                <p className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
-                <h1 className="text-xl font-bold mb-4">{post.title}</h1>
+                <p data-test="post-subreddit" className="text-gray-400 text-sm mb-1">{post.subreddit}</p>
+                <h1 data-test="post-title" className="text-xl font-bold mb-4">{post.title}</h1>
 
                 {/* Video or Image Carousel */}
                 {post.video ? (
@@ -127,7 +127,7 @@ const PostDetails = () => {
 
                 {/* Post Content */}
                 <p className="text-gray-300 mb-4">{post.content}</p>
-                <p className="text-gray-400 text-sm">
+                <p data-test="post-author" className="text-gray-400 text-sm">
                   Posted by {post.author} {formatDistanceToNow(post.created_utc)}
                 </p>
               </div>
