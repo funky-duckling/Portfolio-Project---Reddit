@@ -1,6 +1,8 @@
 # **Reddit Clone App**  
 
-Welcome to the **Reddit Clone App**! This is a fully functional, responsive Reddit client that allows users to browse posts, search for content, and view post details with images and videos. The app is built using **React, Redux, Tailwind CSS, and the Reddit API** for real-time data.  
+Welcome to the **Reddit Clone App**! This is a fully functional, responsive Reddit client that allows users to browse posts, search for content, and view post details with images and videos. 
+
+The app is built using **React, Redux, Tailwind CSS, and the Reddit API** for real-time data.  
 
 ## **Features**  
 
@@ -11,6 +13,7 @@ Welcome to the **Reddit Clone App**! This is a fully functional, responsive Redd
 ✅ **Load More functionality** – Seamlessly load additional posts without losing your scroll position.  
 ✅ **Responsive design** – Optimized for **desktop and mobile** using **Tailwind CSS**.  
 ✅ **Image carousel for multi-image posts** – Swipe through multiple images using Swiper.js.    
+✅ **Smooth animations** – Seamless UI transitions with **Framer Motion**.    
 
 ---
 
@@ -28,10 +31,12 @@ Welcome to the **Reddit Clone App**! This is a fully functional, responsive Redd
 - **Reddit API** – Fetches real-time Reddit posts and comments using OAuth authentication  
 - **Axios** – Handles API requests efficiently  
 
-🛠 **Development Tools:**  
+🛠 **Development Tools & Testing:**  
 - **Vite** – Fast development environment for React  
 - **ESLint & Prettier** – Code quality and formatting  
-- **Jest & Enzyme** – Unit and end-to-end testing (in progress)  
+- **Vitest** – Modern alternative to Jest for efficient unit testing  
+- **Cypress** - End-to-end testing for UI interactions & API calls  
+- **Figma** - Wireframing & UI design  
 
 ---
 
@@ -95,9 +100,28 @@ The app will now be available at http://localhost:5173.
 
 ---
 
+## **Testing**  
+
+### 1️⃣ Unit Tests (Jest + Vitest)  
+✅ **Redux State Management** – Tests for reducers & actions (e.g., `postsSlice`).  
+✅ **Custom Hooks** – Ensured `usePosts` correctly fetches & updates state.  
+✅ **React Components** – Verified UI elements render correctly & update on user interaction.  
+
+### 2️⃣ Integration Tests (React Testing Library + Vitest)  
+✅ **Search Functionality** – Ensured typing updates state and fetches correct results.  
+✅ **Sorting Filters** – Verified button clicks update active filters.  
+✅ **Navigation** – Ensured routing works for home, search, and post details pages.  
+
+### 3️⃣ End-to-End (E2E) Tests (Cypress)  
+✅ **Homepage** – Confirmed search, navigation, and filters work as expected.  
+✅ **Post Details Page** – Verified clicking a post displays correct details and comments.  
+✅ **Search Page** – Ensured searching updates results dynamically.  
+✅ **Navigation & Filters** – Checked filter buttons and back navigation.  
+
+---
+
 ## **Roadmap & Future Improvements**  
 
-🔹 **Write unit tests** using **Jest & Enzyme** (in progress).  
 🔹 **Improve accessibility** for a better user experience.  
 🔹 **Add user authentication** to allow personalized interactions (voting, commenting).  
 🔹 **Enhance performance** and optimize API calls.  
