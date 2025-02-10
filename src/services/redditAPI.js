@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const REDDIT_AUTH_URL = 'https://www.reddit.com';
 const REDDIT_API_URL = 'https://oauth.reddit.com';
-const CLIENT_ID = '3ZrBe0RXDTE7kjIw9n2ctQ';
-const CLIENT_SECRET = 'ZXOjpWmDkekNweAg4fjW570pyMU_ZQ';
+const CLIENT_ID = import.meta.env.VITE_REDDIT_CLIENT_ID;
+const CLIENT_SECRET = import.meta.env.VITE_REDDIT_API_KEY;
 
 // Function to get the access token
 export const getAccessToken = async () => {
@@ -25,35 +25,24 @@ export const getAccessToken = async () => {
   }
 };
 
+const decodeImageUrl = (url) => url?.replace(/&amp;/g, '&') || '';
+
 // Function to map API response to UI-friendly structure
-export const mapRedditPostToCard = (post) => {
-  // Extract single image (fallback for non-gallery posts)
-  const previewImages = post.preview?.images?.map((img) =>
-    img.source?.url.replace(/&amp;/g, '&')
-  ) || [];
-
-  // Extract multiple images from gallery
-  const galleryImages = post.gallery_data?.items?.map((item) =>
-    post.media_metadata?.[item.media_id]?.s?.u.replace(/&amp;/g, '&')
-  ) || [];
-
-  // Combine both image sources
-  const images = [...previewImages, ...galleryImages];
-
-  return {
-    id: post.id,
-    title: post.title,
-    author: post.author,
-    subreddit: post.subreddit_name_prefixed,
-    upvotes: post.ups,
-    comments: post.num_comments,
-    content: post.selftext || '',
-    logo: post.subreddit_icon || '',
-    images, // Supports multiple images
-    video: post.media?.reddit_video?.fallback_url || null,
-    created_utc: post.created_utc,
-  };
-};
+const mapRedditPostToCard = (post) => ({
+  id: post.id,
+  title: post.title,
+  author: post.author,
+  subreddit: post.subreddit_name_prefixed,
+  upvotes: post.ups,
+  comments: post.num_comments,
+  content: post.selftext || '',
+  images: [
+    ...(post.preview?.images?.map((img) => decodeImageUrl(img.source?.url)) || []),
+    ...(post.gallery_data?.items?.map((item) => decodeImageUrl(post.media_metadata?.[item.media_id]?.s?.u)) || []),
+  ],
+  video: post.media?.reddit_video?.fallback_url || null,
+  created_utc: post.created_utc,
+});
 
 // Function to fetch Reddit posts (including Search)
 export const fetchRedditPosts = async (

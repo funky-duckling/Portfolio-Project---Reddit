@@ -7,6 +7,7 @@ const NavButtons = () => {
 
   const handleButtonClick = (filter) => {
     dispatch(setActiveFilter(filter));
+    window.scrollTo(0, 0);
   };
 
   return (
